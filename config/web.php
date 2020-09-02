@@ -42,6 +42,9 @@ $config = [
                 ],
             ],
         ],
+        'helper' => [
+            'class' => 'app\components\helper',
+        ],
         'db' => $db,
         /*
         'urlManager' => [
