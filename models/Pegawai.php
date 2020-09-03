@@ -77,4 +77,24 @@ class Pegawai extends \yii\db\ActiveRecord
             'updated_by' => 'Updated By',
         ];
     }
+
+    public static function hashPassword($salt, $password){ //membuat password hash
+        return md5($salt.$password);
+    }
+    public function beforeSave($insert){
+        if(!parent::beforeSave($insert))
+            return false;
+        if($insert)
+        {
+            $password=$this->password;
+            $salt=$this->generateSalt();
+            $this->$salt=$salt;
+            $this->password=$this->hashPassword($salt,$password);
+        }
+        return true;
+    }
+
+    protected function generateSalt(){
+        return uniqid('',true);
+    }
 }
