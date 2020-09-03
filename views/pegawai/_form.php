@@ -16,7 +16,9 @@ use yii\jui\DatePicker;
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'password')->passwordInput() ?>
+    <?php if($this->context->action->id=='create'): ?>
+        <?= $form->field($model, 'password')->passwordInput() ?>
+    <?php endif ?>
 
     <?= $form->field($model, 'telepon')->textInput(['maxlength' => true]) ?>
 
@@ -26,7 +28,7 @@ use yii\jui\DatePicker;
 
     <?= $form->field($model, 'tanggal_lahir')->widget(DatePicker::class, [
         'language' => 'id',
-        'dateFormat' => 'dd-MM-yyyy',
+        'dateFormat' => 'yyyy-MM-dd',
         'options'=>[
             'class' => 'form-control',
             'style' => [
