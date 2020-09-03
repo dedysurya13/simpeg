@@ -88,7 +88,7 @@ class Pegawai extends \yii\db\ActiveRecord
         {
             $password=$this->password;
             $salt=$this->generateSalt();
-            $this->$salt=$salt;
+            $this->salt=$salt;
             $this->password=$this->hashPassword($salt,$password);
         }
         return true;
