@@ -58,7 +58,7 @@ class Pegawai extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'nip' => 'Nip',
+            'nip' => 'NIP',
             'nama' => 'Nama',
             'tempat_lahir' => 'Tempat Lahir',
             'tanggal_lahir' => 'Tanggal Lahir',
@@ -97,4 +97,71 @@ class Pegawai extends \yii\db\ActiveRecord
     protected function generateSalt(){
         return uniqid('',true);
     }
+
+    public function validatePassword($password){
+        return $this->password === static::hashPassword($this->salt,$password);;
+    }
+
+    /**
+    *@inheritdoc
+    */
+
+    public static function findIdentity($id){
+        $user = self::find()->where(["id"=>$id])->one();
+        if (is_null($user)){
+            return null;
+        }
+        return new static($user);
+    }
+
+    /**
+    *@inheritdoc
+    */
+
+    public static function findIdentityByAccessToken($token, $userType=null){
+        $user = self::find()->where(["accessToken"=>$token])->one();
+        if(!count($user)){
+            return null;
+        }
+        return new static($user);
+    }
+
+    /**
+    * Finds user by username
+    *
+    * @param string $username
+    * @return static|null
+    */
+
+    public static function findByUsername($username){
+        $user=self::find()->where(["username"=>$username])->one();
+        if(is_null($user)){
+            return null;
+        }
+        return new static($user);
+    }
+
+    /**
+     * @inheritdoc
+     */
+
+     public function getId(){
+         return $this->id;
+     }
+
+     /**
+      * @inheritdoc
+      */
+
+      public function getAuthKey(){
+          return $this->salt;
+      }
+
+      /**
+       * @inheritdoc
+       */
+
+      public function validateAuthKey($authKey){
+          return $this->authKey===$authKey;
+      }
 }
