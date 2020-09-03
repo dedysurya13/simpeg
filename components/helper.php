@@ -44,4 +44,25 @@ class helper extends Component{
         return $this->statusNikah;
     }
 
+
+    public function getAgama($id)
+    {
+        return $this->agama[$id];
+    }
+
+    public function getJenisKelamin($id)
+    {
+        return $this->jenisKelamin[$id];
+    }
+
+    public function getStatusPegawai($id)
+    {
+        return $this->statusPegawai[$id];
+    }
+
+    public function getStatusNikah($id)
+    {
+        return $this->statusNikah[$id];
+    }
+
 }
