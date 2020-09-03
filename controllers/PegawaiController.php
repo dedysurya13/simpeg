@@ -66,7 +66,11 @@ class PegawaiController extends Controller
     {
         $model = new Pegawai();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            $model->created_date = date('Y-m-d H:i:s');
+            $model->created_by = 0;
+            $model->save();
+            
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
