@@ -26,7 +26,7 @@ use Yii;
  * @property string|null $updated_date
  * @property int|null $updated_by
  */
-class Pegawai extends \yii\db\ActiveRecord
+class Pegawai extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
     /**
      * {@inheritdoc}
