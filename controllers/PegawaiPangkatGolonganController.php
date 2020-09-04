@@ -8,6 +8,8 @@ use app\models\PegawaiPangkatGolonganSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helper\ArrayHelper;
+use yii\web\UploadedFile;
 
 /**
  * PegawaiPangkatGolonganController implements the CRUD actions for PegawaiPangkatGolongan model.
@@ -35,12 +37,16 @@ class PegawaiPangkatGolonganController extends Controller
      */
     public function actionIndex()
     {
+        $id_pegawai = Yii::$app->request->get("id_pegawai");
+
         $searchModel = new PegawaiPangkatGolonganSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->andWhere(['id_pegawai'=>$id_pegawai]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'id_pegawai' => $id_pegawai,
         ]);
     }
 
@@ -66,13 +72,26 @@ class PegawaiPangkatGolonganController extends Controller
     {
         $model = new PegawaiPangkatGolongan();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())){
+
+            $scan = UploadedFile::getInstance($model, 'scan');
+
+            if(!is_null($scan)){
+                $date = date(YmdHis);
+                $fileName=Yii::$app->user->identity->nip.$date.'.'.$scan->extension;
+                Yii::$app->params['uploadPath'] = Yii::$app->basePath.'/web/uploads/scan/';
+                $pathUpload = Yii::$app->params['uploadPath'].$fileName;
+                $scan->saveAs($pathUpload);
+                $model->scan = $fileName;
+            }
+
+            $model->created_by = Yii::$app->user->identity->id;
+            $model->created_date = date("Y-m-d H:i:s");
+            $model->save();
+            return $this->redirect(['view','id'=>$model->id]);
         }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+        //SAMPAI SINI
     }
 
     /**
