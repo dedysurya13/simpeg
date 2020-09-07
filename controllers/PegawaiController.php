@@ -8,7 +8,7 @@ use app\models\PegawaiSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use yii\web\UploadedFile;
 /**
  * PegawaiController implements the CRUD actions for Pegawai model.
  */
@@ -67,16 +67,28 @@ class PegawaiController extends Controller
         $model = new Pegawai();
 
         if ($model->load(Yii::$app->request->post())) {
+
+            $foto = UploadedFile::getInstance($model,'foto');
+
+            if(!is_null($foto)){
+                $date = date("YmdHis");
+                $fileName=Yii::$app->user->identity->nip.$date.'.'.$foto->extension;
+                Yii::$app->params['uploadPath'] = Yii::$app->basePath.'/web/uploads/foto/';
+                $pathUpload = Yii::$app->params['uploadPath'].$fileName;
+                $foto->saveAs($pathUpload);
+                $model->foto = $fileName;
+            }
+
             $model->created_date = date('Y-m-d H:i:s');
-            $model->created_by = 0;
+            $model->updated_by = Yii::$app->user->identity->id;
             $model->save(false);
             
             return $this->redirect(['view', 'id' => $model->id]);
-        }else{
-            return $this->render('create', [
-                'model' => $model,
-            ]);
         }
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
     }
 
     /**
@@ -89,16 +101,34 @@ class PegawaiController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        
-        if ($model->load(Yii::$app->request->post())){
-            $model->updated_date=date('Y-m-d H:i:s');
-            $model->updated_by=0;
-            $model->save(false);
 
-            return $this->redirect(['view', 'id'=>$model->id]);
-        }else{
-            return $this->render('update', ['model'=>$model]);
+        $temp_foto = $model->foto;
+
+        if ($model->load(Yii::$app->request->post())) {
+
+            $foto = UploadedFile::getInstance($model,'foto');
+            
+            if(!is_null($foto)){
+                $date = date("YmdHis");
+                $fileName=Yii::$app->user->identity->nip.$date.'.'.$foto->extension;
+                Yii::$app->params['uploadPath'] = Yii::$app->basePath.'/web/uploads/foto/';
+                $pathUpload = Yii::$app->params['uploadPath'].$fileName;
+                $foto->saveAs($pathUpload);
+                $model->foto = $fileName;
+            }else{
+                $model->foto = $temp_foto;
+            }
+
+
+            $model->updated_date = date('Y-m-d H:i:s');
+            $model->updated_by = Yii::$app->user->identity->id;
+            $model->save(false);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
+
+        return $this->render('update', [
+            'model' => $model,
+        ]);
     }
 
     /**
