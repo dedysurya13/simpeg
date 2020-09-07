@@ -25,26 +25,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filterModel' => $searchModel,
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
-
-                    'id',
-                    'nip',
                     'nama:ntext',
-                    //'tempat_lahir',
-                    //'tanggal_lahir',
-                    //'agama',
-                    //'jenis_kelamin',
-                    //'nikah',
-                    //'status_pegawai',
-                    //'alamat:ntext',
-                    //'telepon',
-                    //'email:email',
-                    //'salt:ntext',
-                    //'password:ntext',
-                    //'created_date',
-                    //'created_by',
-                    //'updated_date',
-                    //'updated_by',
-
+                    'nip',
+                    'email:email',
                     [
                         'header' => 'Action',
                         'class' => 'yii\grid\ActionColumn',
