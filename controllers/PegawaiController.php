@@ -67,7 +67,7 @@ class PegawaiController extends Controller
         $model = new Pegawai();
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->created_date = date('Y-m-d H:m:s');
+            $model->created_date = date('Y-m-d H:i:s');
             $model->created_by = 0;
             $model->save(false);
             
@@ -91,7 +91,7 @@ class PegawaiController extends Controller
         $model = $this->findModel($id);
         
         if ($model->load(Yii::$app->request->post())){
-            $model->updated_date=date('Y-m-d H:m:s');
+            $model->updated_date=date('Y-m-d H:i:s');
             $model->updated_by=0;
             $model->save(false);
 
