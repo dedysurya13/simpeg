@@ -37,7 +37,7 @@ class PegawaiPangkatGolongan extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_master_pangkat_golongan', 'id_pegawai', 'tanggal_sk', 'no_sk', 'scan', 'created_by', 'created_date'], 'required'],
+            [['id_master_pangkat_golongan', 'id_pegawai', 'tanggal_sk', 'no_sk', 'created_by', 'created_date'], 'required'],
             [['id_master_pangkat_golongan', 'id_pegawai', 'created_by', 'updated_by'], 'integer'],
             [['tanggal_sk', 'created_date', 'updated_date'], 'safe'],
             [['scan'], 'string'],
@@ -67,8 +67,6 @@ class PegawaiPangkatGolongan extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[MasterPangkatGolongan]].
-     *
      * @return \yii\db\ActiveQuery
      */
     public function getMasterPangkatGolongan()
@@ -77,8 +75,6 @@ class PegawaiPangkatGolongan extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Pegawai]].
-     *
      * @return \yii\db\ActiveQuery
      */
     public function getPegawai()
