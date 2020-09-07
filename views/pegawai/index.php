@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\PegawaiSearch */
@@ -44,7 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     //'updated_date',
                     //'updated_by',
 
-                   /* [
+                    [
                         'header' => 'Action',
                         'class' => 'yii\grid\ActionColumn',
                         'template' => '{view} {pangkat} {pendidikan} {update} {delete}',
@@ -67,7 +68,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 return Html::a('delete', $url, ['class'=>'btn btn-danger']);
                             } 
                         ],
-                    ],*/
+                    ],
                 ],
             ]); ?>
         </div>        
