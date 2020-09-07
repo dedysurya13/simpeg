@@ -31,7 +31,7 @@ class MasterPangkatGolongan extends \yii\db\ActiveRecord
         return [
             [['golongan', 'pangkat'], 'required'],
             [['pangkat'], 'string'],
-            [['golongan'], 'string', 'max' => 4],
+            [['golongan'], 'string', 'max' => 3],
         ];
     }
 
@@ -48,8 +48,6 @@ class MasterPangkatGolongan extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[PegawaiPangkatGolongans]].
-     *
      * @return \yii\db\ActiveQuery
      */
     public function getPegawaiPangkatGolongans()
