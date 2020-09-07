@@ -27,25 +27,6 @@ class helper extends Component{
         '3' => 'Cerai Hidup',
         '4' => 'Cerai Mati'
     ];
-    private $pangkatGolonganArray = [
-        '1' => 'IVe',
-        '2' => 'IVd',
-        '3' => 'IVc',
-        '4' => 'IVb',
-        '5' => 'IVa',
-        '6' => 'IIId',
-        '7' => 'IIIc',
-        '8' => 'IIIb',
-        '9' => 'IIIa',
-        '10' => 'IId',
-        '11' => 'IIc',
-        '12' => 'IIb',
-        '13' => 'IIa',
-        '14' => 'Id',
-        '15' => 'Ic',
-        '16' => 'Ib',
-        '17' => 'Ia',
-    ];
     public function listAgama()
     {
         return $this->agama;
@@ -62,7 +43,6 @@ class helper extends Component{
     {
         return $this->statusNikah;
     }
-
 
     public function getAgama($id)
     {
