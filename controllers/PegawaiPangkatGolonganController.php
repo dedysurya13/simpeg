@@ -10,7 +10,6 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
-
 /**
  * PegawaiPangkatGolonganController implements the CRUD actions for PegawaiPangkatGolongan model.
  */
@@ -72,12 +71,12 @@ class PegawaiPangkatGolonganController extends Controller
     {
         $model = new PegawaiPangkatGolongan();
 
-        if ($model->load(Yii::$app->request->post())){
+        if ($model->load(Yii::$app->request->post())) {
 
-            $scan = UploadedFile::getInstance($model, 'scan');
+            $scan = UploadedFile::getInstance($model,'scan');
 
             if(!is_null($scan)){
-                $date = date(YmdHis);
+                $date = date("YmdHis");
                 $fileName=Yii::$app->user->identity->nip.$date.'.'.$scan->extension;
                 Yii::$app->params['uploadPath'] = Yii::$app->basePath.'/web/uploads/scan/';
                 $pathUpload = Yii::$app->params['uploadPath'].$fileName;
@@ -88,16 +87,19 @@ class PegawaiPangkatGolonganController extends Controller
             $model->created_by = Yii::$app->user->identity->id;
             $model->created_date = date("Y-m-d H:i:s");
             $model->save(false);
-            return $this->redirect(['view','id'=>$model->id]);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         $id_pegawai = Yii::$app->request->get("id");
         $model->id_pegawai = $id_pegawai;
 
         $pangkatGolongan = \app\models\MasterPangkatGolongan::find()->all();
-        $pangkatGolonganArray= ArrayHelper::map($pangkatGolongan, 'id', 'golongan');
+        $pangkatGolonganArray = ArrayHelper::map($pangkatGolongan,'id','golongan');
 
-        return $this->render('create', ['model'=>$model, 'pangkatGolonganArray'=>$pangkatGolonganArray,]);
+        return $this->render('create', [
+            'model' => $model,
+            'pangkatGolonganArray' => $pangkatGolonganArray,
+        ]);
     }
 
     /**
@@ -110,34 +112,37 @@ class PegawaiPangkatGolonganController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        
+        $temp_scan = $model->scan;
 
-        $temp_scan = $model->$scan;
+        if ($model->load(Yii::$app->request->post())) {
 
-        if ($model->load(Yii::$app->request->post())){
-
-            $scan = UploadedFile::getInstance($model, 'scan');
+            $scan = UploadedFile::getInstance($model,'scan');
 
             if(!is_null($scan)){
                 $date = date("YmdHis");
-                $fileName=Yii::$app->user->identity->nip/$date.'.'.$scan->extension;
-                Yii::$app->params['uploadPath']=Yii::$app->basePath.'web/uploads/scan/';
-                $pathUpload= Yii::$app->params['uploadPath'].$fileName;
+                $fileName=Yii::$app->user->identity->nip.$date.'.'.$scan->extension;
+                Yii::$app->params['uploadPath'] = Yii::$app->basePath.'/web/uploads/scan/';
+                $pathUpload = Yii::$app->params['uploadPath'].$fileName;
                 $scan->saveAs($pathUpload);
                 $model->scan = $fileName;
             }else{
                 $model->scan = $temp_scan;
             }
-            $model->updated_by = Yii::$app->user->identify->id;
+            $model->updated_by = Yii::$app->user->identity->id;
             $model->updated_date = date("Y-m-d H:i:s");
             $model->save(false);
 
-            return $this->redirect(['view', 'id'=>$model->id]);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        $pangkatGolongan = \app\models\MasterPangkatGolongan::find()->all;
-        $pangkatGolonganArray = ArrayHelper::map($pangkatGolongan, 'id', 'golongan');
+        $pangkatGolongan = \app\models\MasterPangkatGolongan::find()->all();
+        $pangkatGolonganArray = ArrayHelper::map($pangkatGolongan,'id','golongan');
 
-        return $this->render('update',['model'=>$model, 'pangkatGolonganArray'=>$pangkatGolonganArray,]);
+        return $this->render('update', [
+            'model' => $model,
+            'pangkatGolonganArray' => $pangkatGolonganArray,
+        ]);
     }
 
     /**
