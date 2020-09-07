@@ -12,6 +12,9 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
     'components' => [
+        'helper'=>[
+            'class' => 'app\components\helper',
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'KJVXdLedKBnLKujP4v6zSsEPkmX33laI',
@@ -41,9 +44,6 @@ $config = [
                     'levels' => ['error', 'warning'],
                 ],
             ],
-        ],
-        'helper' => [
-            'class' => 'app\components\helper',
         ],
         'db' => $db,
         /*
