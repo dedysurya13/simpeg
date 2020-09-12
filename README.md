@@ -1,2 +1,2 @@
 # simpeg
- Sistem Informasi Managemen Pegawai
+ [WIP] Sistem Informasi Managemen Pegawai dengan Framework Yii2
